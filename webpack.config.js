@@ -36,7 +36,8 @@ const config = {
             exclude: /node_modules/,
             use: [
                 isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
-                'css-loader'
+                'css-loader',
+                'postcss-loader',
             ]
         }, {
             test: /\.(gif|png|jpe?g|svg)$/i,
@@ -79,7 +80,14 @@ const config = {
             }),
         ],
         splitChunks: {
-            chunks: "all"
+            chunks: "all",
+            minSize: 0,
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: 1
+                }
+            }
         }
     } : {},
     devServer: {
