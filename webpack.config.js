@@ -13,7 +13,7 @@ const config = {
     },
     mode: isDevelopment ? "development" : "production",
     output: {
-        filename: 'bundle.js',
+        filename: 'bundle[hash].js',
         path: distPath
     },
     module: {
