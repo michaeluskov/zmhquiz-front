@@ -21,6 +21,7 @@
   "dependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
+    "@kennethormandy/react-fittext": "^0.6.0",
     "@types/node": "^10.12.18",
     "babel-loader": "^8.0.5",
     "cross-env": "^5.2.0",
@@ -32,6 +33,7 @@
     "postcss": "^7.0.13",
     "postcss-loader": "^3.0.0",
     "preact": "^8.4.2",
+    "preact-compat": "^3.18.4",
     "style-loader": "^0.23.1",
     "ts-loader": "^5.3.3",
     "typescript": "^3.2.2",

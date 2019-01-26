@@ -1,8 +1,12 @@
 html, body {
     margin: 0;
     padding: 0;
+    background: #7e17e4;
+    font-family: 'Open Sans', sans-serif;
+    color: #ffffff;
 }
 
 #root {
     min-height: 100vh;
+    text-align: center;
 }
