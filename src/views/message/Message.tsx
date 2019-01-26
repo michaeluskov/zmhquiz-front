@@ -4,7 +4,7 @@ const styles = require("./Message.css");
 
 interface Props {
     header: string | VNode;
-    content: string | VNode;
+    content?: string | VNode;
 }
 
 export const Message: FunctionalComponent<Props> = props =>
@@ -13,8 +13,10 @@ export const Message: FunctionalComponent<Props> = props =>
             <div className="msg-header">
                 {props.header}
             </div>
+            {props.content &&
             <div className="msg-content">
                 {props.content}
             </div>
+            }
         </div>
     </MainContainer>;
