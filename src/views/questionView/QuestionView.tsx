@@ -1,16 +1,11 @@
 import {h} from "preact";
 import * as Preact from "preact";
 import {MainContainer} from "../mainContainer/MainContainer";
+import {Question} from "../../logic/misc";
 const styles = require("./QuestionView.css");
 
 interface Props {
-    question: string;
-    answers: {
-        title: string;
-        isRight: boolean;
-        isWrong: boolean;
-        isLoading: boolean;
-    }[];
+    question: Question;
     secondsLeft: number;
     isDisabled: boolean;
     onAnswer: (number: number) => void;
@@ -23,10 +18,10 @@ export const QuestionView = (props: Props) => (
                 <div className={`qv-timer ${props.secondsLeft <=4 ? "qv-timer-red" : ""}`}>
                     {props.secondsLeft}
                 </div>
-                <div className="qv-question">{props.question}</div>
+                <div className="qv-question">{props.question.question}</div>
             </div>
             <div className="qv-bottom">
-                {props.answers.map((answer, i) => (
+                {props.question.answers.map((answer, i) => (
                     <QuestionButton {...answer} isDisabled={props.isDisabled} onClick={() => props.onAnswer(i)} />
                 ))}
             </div>
