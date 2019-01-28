@@ -3,6 +3,7 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const isDevelopment = !isProduction;
 const distPath = path.join(__dirname, '/dist');
 
@@ -76,7 +77,14 @@ const config = {
         }),
         new HtmlWebpackPlugin({
             template: './index.html'
-        })
+        }),
+        new CopyWebpackPlugin([
+            {
+                from: "_redirects",
+                to: "",
+                toType: "dir",
+            }
+        ])
     ],
     optimization: isProduction ? {
         minimizer: [
