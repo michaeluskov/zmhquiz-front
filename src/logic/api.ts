@@ -1,4 +1,5 @@
 import {Question, wait} from "./misc";
+import axios from "axios";
 
 interface QuestionMeta {
     questions: Question[];
@@ -6,41 +7,14 @@ interface QuestionMeta {
 }
 
 export const getQuestionMeta = (quizId, login, hash): Promise<QuestionMeta> => {
-    return wait(2000)
-        .then(() => ({
-            questions: [
-                {
-                    id: "1",
-                    question: "Как у тебя дела?",
-                    timeToAnswer: 10,
-                    answers: [
-                        {title: "Отлично"},
-                        {title: "Замечательно"},
-                        {title: "СуперСуперСуперСуперСуперСуперСуперСуперСуперСуперСупер"}
-                    ] as {
-                        title: string;
-                        isRight: boolean;
-                        isWrong: boolean;
-                        isLoading: boolean;
-                    }[]
-                },
-                {
-                    id: "2",
-                    question: "А сейчас?",
-                    timeToAnswer: 10,
-                    answers: [
-                        {title: "Отлично"},
-                        {title: "Замечательно"},
-                        {title: "СуперСуперСуперСуперСуперСуперСуперСуперСуперСуперСупер"}
-                    ] as {
-                        title: string;
-                        isRight: boolean;
-                        isWrong: boolean;
-                        isLoading: boolean;
-                    }[]
-                }
-            ]
-        }))
+    return axios.get(`${process.env.API_URL}/questionMeta?quiz=${quizId}&login=${login}&hash=${hash}`, {
+        validateStatus: function (status) {
+            return status == 200 || status == 403;
+        }
+    })
+        .then(result => {
+            return result.data;
+        });
 };
 
 interface PostAnswerInterface {
@@ -49,8 +23,12 @@ interface PostAnswerInterface {
 }
 
 export const postAnswer = (quizId, login, hash, questionId, answerNum): Promise<PostAnswerInterface> => {
-    return wait(2000)
-        .then(() => ({
-            isRight: true
-        }));
+    return axios.post(`${process.env.API_URL}/answer`, {
+        quiz: quizId,
+        login,
+        hash,
+        questionId,
+        answerNum
+    })
+        .then(result => result.data);
 };

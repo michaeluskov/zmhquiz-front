@@ -1,4 +1,5 @@
 const isProduction = process.argv.indexOf("production") !== -1;
+const webpack = require("webpack");
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -78,6 +79,9 @@ const config = {
         new HtmlWebpackPlugin({
             template: './index.html'
         }),
+        new webpack.EnvironmentPlugin({
+            "API_URL": isProduction ? "https://svrjpymwp5.execute-api.us-east-1.amazonaws.com/dev" : "http://localhost:3000"
+        }),
         new CopyWebpackPlugin([
             {
                 from: "_redirects",
@@ -114,6 +118,7 @@ const config = {
         port: 9000,
         compress: true,
         open: true,
+        historyApiFallback: true
     }
 };
 
