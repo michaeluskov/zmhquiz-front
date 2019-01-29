@@ -11,11 +11,12 @@ const distPath = path.join(__dirname, '/dist');
 
 const config = {
     entry: {
-        main: './index.tsx'
+        main: './index.tsx',
+        admin: './admin.tsx'
     },
     mode: isDevelopment ? "development" : "production",
     output: {
-        filename: 'bundle[hash].js',
+        filename: '[name][hash].js',
         path: distPath
     },
     resolve: {
@@ -77,7 +78,13 @@ const config = {
             chunkFilename: '[id][hash].css'
         }),
         new HtmlWebpackPlugin({
+            chunks: ["main"],
             template: './index.html'
+        }),
+        new HtmlWebpackPlugin({
+            chunks: ["admin"],
+            template: './index.html',
+            filename: 'odmen.html'
         }),
         new webpack.EnvironmentPlugin({
             "API_URL": isProduction ? "https://svrjpymwp5.execute-api.us-east-1.amazonaws.com/dev" : "http://localhost:3000"
@@ -118,7 +125,12 @@ const config = {
         port: 9000,
         compress: true,
         open: true,
-        historyApiFallback: true
+        historyApiFallback: {
+            rewrites: [
+                { from: /^\/odmen/, to: '/odmen.html'},
+                { from: /^\/.*/, to: '/index.html'}
+            ]
+        }
     }
 };
 
