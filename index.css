@@ -7,6 +7,6 @@ html, body {
 }
 
 #root {
-    min-height: 100vh;
+    min-height: 90vh;
     text-align: center;
 }
