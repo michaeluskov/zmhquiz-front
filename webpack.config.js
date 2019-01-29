@@ -78,11 +78,11 @@ const config = {
             chunkFilename: '[id][hash].css'
         }),
         new HtmlWebpackPlugin({
-            chunks: ["main"],
+            excludeChunks: ["admin"],
             template: './index.html'
         }),
         new HtmlWebpackPlugin({
-            chunks: ["admin"],
+            excludeChunks: ["main"],
             template: './index.html',
             filename: 'odmen.html'
         }),
