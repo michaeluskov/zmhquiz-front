@@ -5,12 +5,12 @@
     flex-direction: column;
     color: #ffffff;
     min-height: 90vh;
-    padding: 10px 10px;
+    padding: 10px 30px;
     box-sizing: border-box;
 }
 
 .msg-header {
-    font-size: 48px;
+    font-size: 36px;
     font-weight: 700;
     margin-bottom: 20px;
     text-align: center;
@@ -18,4 +18,5 @@
 
 .msg-content {
     font-size: 24px;
+    text-align: center;
 }

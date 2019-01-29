@@ -10,22 +10,22 @@
 .qv-top {
     flex: 1 0 auto;
     font-weight: 700;
-    font-size: 36px;
+    font-size: 28px;
     position: relative;
     padding-top: 10px;
 }
 
 .qv-timer-place {
     position: relative;
-    height: 70px;
+    height: 40px;
 }
 
 .qv-timer {
     position: absolute;
-    top: 20px;
+    top: 10px;
     right: 0;
     font-weight: 700;
-    font-size: 48px;
+    font-size: 24px;
     text-align: center;
 }
 
@@ -61,7 +61,7 @@
     margin-bottom: 15px;
     cursor: pointer;
     font-weight: 700;
-    font-size: 28px;
+    font-size: 24px;
     text-overflow: ellipsis;
 }
 
