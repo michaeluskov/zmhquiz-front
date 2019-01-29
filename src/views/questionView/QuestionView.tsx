@@ -14,10 +14,12 @@ interface Props {
 export const QuestionView = (props: Props) => (
     <MainContainer>
         <div className="qv-root">
-            <div className="qv-top">
+            <div className="qv-timer-place">
                 <div className={`qv-timer ${props.secondsLeft <=4 ? "qv-timer-red" : ""}`}>
                     {props.secondsLeft}
                 </div>
+            </div>
+            <div className="qv-top">
                 <div className="qv-question">{props.question.question}</div>
             </div>
             <div className="qv-bottom">

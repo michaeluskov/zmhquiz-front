@@ -5,6 +5,8 @@
     flex-direction: column;
     color: #ffffff;
     min-height: 90vh;
+    padding: 10px 10px;
+    box-sizing: border-box;
 }
 
 .msg-header {

@@ -3,20 +3,28 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 10px 10px;
+    box-sizing: border-box;
 }
 
 .qv-top {
     flex: 1 0 auto;
     font-weight: 700;
-    font-size: 5vw;
+    font-size: 36px;
     position: relative;
-    padding-top: 60px;
+    padding-top: 10px;
+}
+
+.qv-timer-place {
+    position: relative;
+    height: 70px;
 }
 
 .qv-timer {
     position: absolute;
     top: 20px;
-    right: 20px;
+    right: 0;
+    font-weight: 700;
     font-size: 48px;
     text-align: center;
 }
