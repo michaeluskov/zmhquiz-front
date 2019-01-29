@@ -19,16 +19,16 @@ export const getQuestionMeta = (quizId, login, hash): Promise<QuestionMeta> => {
 
 interface PostAnswerInterface {
     error?: string;
-    isRight: boolean;
+    rightAnswerNum: number;
 }
 
 export const postAnswer = (quizId, login, hash, questionId, answerNum): Promise<PostAnswerInterface> => {
     return axios.post(`${process.env.API_URL}/answer`, {
-        quiz: quizId,
         login,
         hash,
         questionId,
-        answerNum
+        answerNum,
+        quiz: quizId
     })
         .then(result => result.data);
 };

@@ -89,8 +89,10 @@ export class Container extends Component<Props, State> {
         Api.postAnswer(this.props.quizId, this.props.login, this.props.hash, this.getCurrentQuestion().id, answerNum)
             .then(result => {
                 const questions = this.state.questions;
-                questions[this.state.currentQuestion].answers[answerNum].isRight = result.isRight;
-                questions[this.state.currentQuestion].answers[answerNum].isWrong = !result.isRight;
+                const rightNum = result.rightAnswerNum;
+                questions[this.state.currentQuestion].answers[answerNum].isRight = answerNum == rightNum;
+                questions[this.state.currentQuestion].answers[answerNum].isWrong = answerNum !== rightNum;
+                questions[this.state.currentQuestion].answers[rightNum].isRight = true;
                 questions[this.state.currentQuestion].answers[answerNum].isLoading = false;
                 this.setState({
                     questions
