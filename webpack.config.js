@@ -108,17 +108,7 @@ const config = {
                     },
                 },
             }),
-        ],
-        splitChunks: {
-            chunks: "all",
-            minSize: 0,
-            cacheGroups: {
-                vendor: {
-                    test: /[\\/]node_modules[\\/]/,
-                    priority: 1
-                }
-            }
-        }
+        ]
     } : {},
     devServer: {
         contentBase: distPath,
