@@ -2,7 +2,6 @@
     border: none;
     margin: 0;
     padding: 0 30px;
-    width: 100%;
     overflow: hidden;
     -webkit-font-smoothing: inherit;
     -moz-osx-font-smoothing: inherit;
@@ -47,6 +46,10 @@
 .qv-button-wrong {
     background: #D11149;
     color: white;
+}
+
+.qv-button-fullWidth {
+    width: 100%;
 }
 
 @keyframes qv-button-loading-keyframes {

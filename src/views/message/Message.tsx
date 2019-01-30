@@ -20,3 +20,5 @@ export const Message: FunctionalComponent<Props> = props =>
             }
         </div>
     </MainContainer>;
+
+export const MessageDivider: FunctionalComponent = (props) => <div className="msg-divider">{props.children}</div>;

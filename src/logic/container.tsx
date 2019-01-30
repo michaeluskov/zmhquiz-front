@@ -37,8 +37,8 @@ export class Container extends Component<Props, State> {
     }
 
     handleError(e, text = "Произошло что-то вообще непонятное. Даже не знаю, куда смотреть.") {
-        e && console.log(e.message);
-        e && console.log(e.stack);
+        e && console.error(e.message);
+        e && console.error(e.stack);
         this.setState({ error: text });
     }
 
@@ -111,7 +111,7 @@ export class Container extends Component<Props, State> {
              return <Message
                  header={"Готов?"}
                  content={<div>
-                     <Button title={"Готов!"} isLoading={false} isDisabled={false} onClick={() => this.runQuestion(0)}/>
+                     <Button title={"Готов!"} isFullWidth={true} onClick={() => this.runQuestion(0)}/>
                  </div>}
              />;
         if (this.state.currentQuestion >= this.state.questions.length)

@@ -7,8 +7,9 @@ interface QuestionButtonProps {
     title: string;
     isRight?: boolean;
     isWrong?: boolean;
-    isLoading: boolean;
-    isDisabled: boolean;
+    isLoading?: boolean;
+    isDisabled?: boolean;
+    isFullWidth?: boolean;
     onClick: () => void;
 }
 
@@ -16,7 +17,8 @@ const PropToClassName = {
     isRight: "qv-button-right",
     isWrong: "qv-button-wrong",
     isLoading: "qv-button-loading",
-    isDisabled: "qv-button-disabled"
+    isDisabled: "qv-button-disabled",
+    isFullWidth: "qv-button-fullWidth"
 };
 
 export const Button: Preact.FunctionalComponent<QuestionButtonProps> = (props) => (

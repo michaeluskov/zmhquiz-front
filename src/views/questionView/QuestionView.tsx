@@ -25,7 +25,7 @@ export const QuestionView = (props: Props) => (
             </div>
             <div className="qv-bottom">
                 {props.question.answers.map((answer, i) => (
-                    <Button {...answer} isDisabled={props.isDisabled} onClick={() => props.onAnswer(i)} />
+                    <Button {...answer} isFullWidth={true} isDisabled={props.isDisabled} onClick={() => props.onAnswer(i)} />
                 ))}
             </div>
         </div>
