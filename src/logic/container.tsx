@@ -3,6 +3,7 @@ import * as Api from "./api";
 import {Question} from "./misc";
 import {Message} from "../views/message/Message";
 import {QuestionView} from "../views/questionView/QuestionView";
+import {Button} from "../views/button/Button";
 
 interface Props {
     login: string;
@@ -31,9 +32,6 @@ export class Container extends Component<Props, State> {
                    error: meta.error,
                    questions: meta.questions
                 });
-                if (!meta.error) {
-                    this.runQuestion(0);
-                }
             })
             .catch(e => this.handleError(e))
     }
@@ -107,8 +105,15 @@ export class Container extends Component<Props, State> {
             return <Message header={"Упс! Произошла ошибка"} content={this.state.error}/>;
         if (this.state.messageHeader)
             return <Message header={this.state.messageHeader} content={this.state.messageText}/>;
-        if (this.state.currentQuestion === undefined)
+        if (this.state.questions === undefined)
             return <Message header={"Загружаем"}/>;
+         if (this.state.currentQuestion === undefined)
+             return <Message
+                 header={"Готов?"}
+                 content={<div>
+                     <Button title={"Готов!"} isLoading={false} isDisabled={false} onClick={() => this.runQuestion(0)}/>
+                 </div>}
+             />;
         if (this.state.currentQuestion >= this.state.questions.length)
             return <Message header="Ты молодец!"/>
         return <QuestionView

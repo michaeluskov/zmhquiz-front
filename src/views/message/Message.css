@@ -17,6 +17,7 @@
 }
 
 .msg-content {
+    width: 100%;
     font-size: 24px;
     text-align: center;
 }
