@@ -1,0 +1,21 @@
+.ql-root {
+    padding: 30px;
+}
+
+.ql-addquizplace {
+    margin-bottom: 20px;
+}
+
+.ql-quiz {
+    margin-bottom: 12px;
+}
+
+.ql-name {
+    font-size: 28px;
+    font-weight: 700;
+    padding-bottom: 10px;
+}
+
+.ql-action {
+    padding-right: 10px;
+}

@@ -4,12 +4,16 @@ import produce from "immer";
 import {Message, MessageDivider} from "../../views/message/Message";
 import {Input} from "../../views/input/Input";
 import {Button} from "../../views/button/Button";
-import {getSession} from "../api";
+import {getQuizes, getSession} from "../api";
+import {Quiz} from "../../logic/misc";
+import {QuizList} from "../../views/quizList/QuizList";
 
 interface State {
     error: string;
     sessionId: string;
     passwordValue: string;
+    quizes: Quiz[];
+    editingQuiz: Quiz;
 }
 
 export class AdminContainer extends Component<{}, State> {
@@ -33,17 +37,23 @@ export class AdminContainer extends Component<{}, State> {
             .then(response => {
                 this.setState({ passwordValue: undefined });
                 if (response.data.error)
-                    this.setState({ error: response.data.error });
+                    return this.setState({ error: response.data.error });
                 this.setState({ sessionId: response.data.sessionId });
                 this.showQuizes();
             })
             .then(() => this.state.error && this.state.error.indexOf("пароль") !== -1 &&
-                setTimeout(() => this.setState({ error: undefined }), 2000))
+                setTimeout(() => this.setState({ error: undefined }), 900))
             .catch(e => this.handleError(e));
     }
 
     showQuizes() {
-
+        getQuizes(this.state.sessionId)
+            .then(res => {
+               if (res.error)
+                   return this.setState({error: res.error });
+               this.setState({ quizes: res.quizes });
+            })
+            .catch(e => this.handleError(e));
     }
 
     render() {
@@ -60,6 +70,8 @@ export class AdminContainer extends Component<{}, State> {
                         <Button title={"Войти"} onClick={() => this.login()}/>
                     </MessageDivider>
                 </div>}
-            />
+            />;
+        if (!this.state.editingQuiz)
+            return <QuizList quizes={this.state.quizes || []} onEdit={() => {}} onGetResults={() => {}} onAddQuiz={() => {}}/>
     }
 }

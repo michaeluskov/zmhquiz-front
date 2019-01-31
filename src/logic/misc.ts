@@ -10,5 +10,13 @@ export interface Question {
     }[];
 }
 
+export interface Quiz {
+    id: string;
+    from: string;
+    till: string;
+    name: string;
+    questions: Question[];
+}
+
 export const wait = (msecs: number) =>
     new Promise((res) => setTimeout(res, msecs));
