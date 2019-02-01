@@ -1,4 +1,5 @@
 import axios from "axios";
+import {Quiz} from "../logic/misc";
 
 export const getSession = (password: string) => {
   return axios.post(`${process.env.API_URL}/admin/session`, {
@@ -10,3 +11,8 @@ export const getSession = (password: string) => {
 
 export const getQuizes = (sessionId: string) => axios.get(`${process.env.API_URL}/admin/quizes?sessionId=${sessionId}`)
     .then(response => response.data);
+
+export const updateQuiz = (sessionId: string, quiz: Quiz) => axios.post(`${process.env.API_URL}/admin/quiz`, {
+    sessionId,
+    quiz
+});

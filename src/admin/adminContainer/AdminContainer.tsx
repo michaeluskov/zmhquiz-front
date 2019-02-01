@@ -1,5 +1,4 @@
 import {h, Component} from "preact";
-import produce from "immer";
 
 import {Message, MessageDivider} from "../../views/message/Message";
 import {Input} from "../../views/input/Input";
@@ -7,23 +6,20 @@ import {Button} from "../../views/button/Button";
 import {getQuizes, getSession} from "../api";
 import {Quiz} from "../../logic/misc";
 import {QuizList} from "../../views/quizList/QuizList";
+import {QuizEdit} from "../quizEdit/QuizEdit";
 
 interface State {
     error: string;
     sessionId: string;
     passwordValue: string;
     quizes: Quiz[];
-    editingQuiz: Quiz;
+    editingQuiz: number;
 }
 
 export class AdminContainer extends Component<{}, State> {
 
     constructor(props, context) {
         super(props, context);
-    }
-
-    produceState(f: (state: State) => void) {
-        this.setState(produce<State>(this.state, f));
     }
 
     handleError(e, text = "Произошло что-то вообще непонятное. Даже не знаю, куда смотреть.") {
@@ -71,7 +67,17 @@ export class AdminContainer extends Component<{}, State> {
                     </MessageDivider>
                 </div>}
             />;
-        if (!this.state.editingQuiz)
-            return <QuizList quizes={this.state.quizes || []} onEdit={() => {}} onGetResults={() => {}} onAddQuiz={() => {}}/>
+        if (this.state.editingQuiz === undefined)
+            return <QuizList
+                quizes={this.state.quizes || []}
+                onEdit={i => this.setState({ editingQuiz: i })}
+                onGetResults={() => {}}
+                onAddQuiz={() => {}}
+            />;
+        return <QuizEdit
+            quiz={this.state.quizes[this.state.editingQuiz]}
+            onEdit={q => console.log(q)}
+            onGoBack={() => this.setState({ editingQuiz: undefined })}
+        />;
     }
 }

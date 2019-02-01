@@ -32,3 +32,4 @@ export const postAnswer = (quizId, login, hash, questionId, answerNum): Promise<
     })
         .then(result => result.data);
 };
+

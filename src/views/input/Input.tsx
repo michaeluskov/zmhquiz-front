@@ -9,8 +9,8 @@ interface Props {
 }
 
 const onKeyPress = (event: KeyboardEvent, onEnterPress: () => void, onChange: (value: string) => void) => {
-  if ((event.which == 13 || event.keyCode == 13 || event.key === "Enter") && onEnterPress) {
-      onChange((event.target as HTMLInputElement).value);
+    onChange((event.target as HTMLInputElement).value);
+    if ((event.which == 13 || event.keyCode == 13 || event.key === "Enter") && onEnterPress) {
       onEnterPress();
   }
 };
@@ -20,7 +20,8 @@ export const Input: FunctionalComponent<Props> = props => (
         className="in-root"
         type={props.type}
         value={props.value}
-        onKeyPress={e => onKeyPress(e, props.onEnterPress, props.onChange)}
+        onKeyUp={e => onKeyPress(e, props.onEnterPress, props.onChange)}
         onChange={e => props.onChange((e.target as HTMLInputElement).value)}
     />
 );
+

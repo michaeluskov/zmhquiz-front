@@ -2,6 +2,8 @@ import {h, render, Component} from "preact";
 import {QuestionView} from "./src/views/questionView/QuestionView";
 import {Message} from "./src/views/message/Message";
 import {Container} from "./src/logic/container";
+import 'promise-polyfill/src/polyfill';
+
 require("./index.css");
 
 const quizId = document.location.pathname.slice(1);
