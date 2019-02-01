@@ -60,7 +60,7 @@ export class AdminContainer extends Component<{}, State> {
                 header="Введи пароль"
                 content={<div>
                     <MessageDivider>
-                        <Input type="password" value={this.state.passwordValue} onChange={(v) => this.setState({ passwordValue: v})} onEnterPress={() => this.login()}/>
+                        <Input type="password" isBig value={this.state.passwordValue} onChange={(v) => this.setState({ passwordValue: v})} onEnterPress={() => this.login()}/>
                     </MessageDivider>
                     <MessageDivider>
                         <Button title={"Войти"} onClick={() => this.login()}/>
