@@ -5,6 +5,7 @@ import {Link} from "../../views/link/Link";
 import {Input} from "../../views/input/Input";
 import produce from "immer";
 import {Button} from "../../views/button/Button";
+require("./QuizEdit.css");
 
 interface Props {
     quiz: Quiz;
