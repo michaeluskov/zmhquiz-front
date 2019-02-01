@@ -2,7 +2,7 @@ import {FunctionalComponent, h} from "preact";
 const styles = require("./Input.css");
 
 interface Props {
-    value: string;
+    value: string | number;
     type?: string;
     isBig?: boolean;
     onChange?: (value: string) => void;

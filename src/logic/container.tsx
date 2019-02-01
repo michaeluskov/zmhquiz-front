@@ -84,7 +84,7 @@ export class Container extends Component<Props, State> {
         const questions = this.state.questions;
         questions[this.state.currentQuestion].answers[answerNum].isLoading = true;
         this.setState({ questions });
-        Api.postAnswer(this.props.quizId, this.props.login, this.props.hash, this.getCurrentQuestion().id, answerNum)
+        Api.postAnswer(this.props.quizId, this.props.login, this.props.hash, this.state.currentQuestion, answerNum)
             .then(result => {
                 const questions = this.state.questions;
                 const rightNum = result.rightAnswerNum;

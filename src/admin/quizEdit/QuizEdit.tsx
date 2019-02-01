@@ -1,9 +1,10 @@
 import {h, Component} from "preact";
-import {Quiz} from "../../logic/misc";
+import {Question, Quiz} from "../../logic/misc";
 import {MainContainer} from "../../views/mainContainer/MainContainer";
 import {Link} from "../../views/link/Link";
 import {Input} from "../../views/input/Input";
 import produce from "immer";
+import {Button} from "../../views/button/Button";
 
 interface Props {
     quiz: Quiz;
@@ -20,7 +21,6 @@ const padLeft = (n: number): string => n >= 10 ? `${n}` : `0${n}`;
 const formatDate = (d: Date | string) => {
     if (typeof d == "string")
         d = new Date(d);
-    console.log(d);
     return [padLeft(d.getDate()),
             padLeft(d.getMonth()+1),
             padLeft(d.getFullYear())].join('.')+' '+
@@ -69,6 +69,7 @@ export class QuizEdit extends Component<Props, State> {
         const date = stringToDate(v);
         if (date) {
             this.produceState(s => {s.editedQuiz.from = date.toString()});
+            this.produceState(s => {s.editedQuiz.till = addTenMinutes(date).toString()});
         }
     }
 
@@ -77,6 +78,13 @@ export class QuizEdit extends Component<Props, State> {
         if (date) {
             this.produceState(s => {s.editedQuiz.till = date.toString()});
         }
+    }
+
+    onChangeRightAnswer(questionNum: number, answerNum: number) {
+        this.produceState(state => {
+           state.editedQuiz.questions[questionNum].answers.forEach(a => a.isRight = false);
+           state.editedQuiz.questions[questionNum].answers[answerNum].isRight = true;
+        });
     }
 
     render() {
@@ -97,6 +105,10 @@ export class QuizEdit extends Component<Props, State> {
                     <span className="qe-label">Ссылка на квиз: </span>
                     <Input value={`https://zmh.wtf/${this.state.editedQuiz.id}`} onChange={() => {}}/>
                 </div>
+              <div className="qe-formitem">
+                  <span className="qe-label">Название квиза: </span>
+                  <Input value={this.state.editedQuiz.name} onChange={v => this.produceState((s) => {s.editedQuiz.name = v})} />
+              </div>
                 <div className="qe-formitem">
                     <span className="qe-label">Старт квиза</span>
                     <Input value={formatDate(this.state.editedQuiz.from)} onBlur={v => this.setFrom(v)} />
@@ -104,6 +116,56 @@ export class QuizEdit extends Component<Props, State> {
                 <div className="qe-formitem">
                   <span className="qe-label">Конец квиза</span>
                   <Input value={formatDate(this.state.editedQuiz.till)} onBlur={v => this.setTill(v)} />
+                </div>
+                {this.state.editedQuiz.questions.map((q: Question, i) => (
+                    <div className="qe-questionform">
+                        <div className="qe-questiontitle">
+                            Вопрос {i + 1}
+                        </div>
+                        <div className="qe-formitem">
+                            <span className="qe-label">Текст вопроса</span>
+                            <Input value={q.question} onChange={v => this.produceState(s => {s.editedQuiz.questions[i].question = v})} />
+                        </div>
+                        <div className="qe-formitem">
+                            <span className="qe-label">Время для ответа в секундах</span>
+                            <Input value={q.timeToAnswer || "10"} onChange={v => this.produceState(s => {s.editedQuiz.questions[i].timeToAnswer = Number(v)})} />
+                        </div>
+                        <div className="qe-formitem">
+                            <span className="qe-label">Ответ 1</span>
+                            <Input value={q.answers[0].title} onChange={v => this.produceState(s => {s.editedQuiz.questions[i].answers[0].title = v})} />
+                            <label className="qe-formlabel">
+                                <input type="checkbox" checked={q.answers[0].isRight} onChange={e => this.onChangeRightAnswer(i, 0)} />
+                                Правильный ответ
+                            </label>
+                        </div>
+                        <div className="qe-formitem">
+                            <span className="qe-label">Ответ 2</span>
+                            <Input value={q.answers[1].title} onChange={v => this.produceState(s => {s.editedQuiz.questions[i].answers[1].title = v})} />
+                            <label className="qe-formlabel">
+                                <input type="checkbox" checked={q.answers[1].isRight} onChange={e => this.onChangeRightAnswer(i, 1)} />
+                                Правильный ответ
+                            </label>
+                        </div>
+                        <div className="qe-formitem">
+                            <span className="qe-label">Ответ 3</span>
+                            <Input value={q.answers[2].title} onChange={v => this.produceState(s => {s.editedQuiz.questions[i].answers[2].title = v})} />
+                            <label className="qe-formlabel">
+                                <input type="checkbox" checked={q.answers[2].isRight} onChange={e => this.onChangeRightAnswer(i, 2)} />
+                                Правильный ответ
+                            </label>
+                        </div>
+                    </div>
+                ))}
+                <div>
+                    <Button
+                        title={"Добавить вопрос"}
+                        onClick={() => this.produceState(s => {s.editedQuiz.questions.push({
+                            answers: [{}, {}, {}]
+                        } as Question)})}
+                    />
+                </div>
+                <div>
+                    <Button title={"Сохранить"} onClick={() => this.props.onEdit(this.state.editedQuiz)}/>
                 </div>
               </div>
           </div>

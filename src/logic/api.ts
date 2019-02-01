@@ -22,11 +22,11 @@ interface PostAnswerInterface {
     rightAnswerNum: number;
 }
 
-export const postAnswer = (quizId, login, hash, questionId, answerNum): Promise<PostAnswerInterface> => {
+export const postAnswer = (quizId, login, hash, questionNum, answerNum): Promise<PostAnswerInterface> => {
     return axios.post(`${process.env.API_URL}/answer`, {
         login,
         hash,
-        questionId,
+        questionNum,
         answerNum,
         quiz: quizId
     })
