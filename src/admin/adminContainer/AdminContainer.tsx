@@ -3,7 +3,7 @@ import {h, Component} from "preact";
 import {Message, MessageDivider} from "../../views/message/Message";
 import {Input} from "../../views/input/Input";
 import {Button} from "../../views/button/Button";
-import {getQuizes, getSession} from "../api";
+import {getQuizes, getSession, updateQuiz} from "../api";
 import {Quiz} from "../../logic/misc";
 import {QuizList} from "../../views/quizList/QuizList";
 import {QuizEdit} from "../quizEdit/QuizEdit";
@@ -52,6 +52,13 @@ export class AdminContainer extends Component<{}, State> {
             .catch(e => this.handleError(e));
     }
 
+    onEdit(quizNum: number, quiz: Quiz) {
+        updateQuiz(this.state.sessionId, quiz)
+            .then(() => this.showQuizes())
+            .then(() => this.setState({ editingQuiz: undefined }))
+            .catch(e => this.handleError(e));
+    }
+
     render() {
         if (this.state.error)
             return <Message header={"Ошибка"} content={this.state.error} />;
@@ -72,11 +79,11 @@ export class AdminContainer extends Component<{}, State> {
                 quizes={this.state.quizes || []}
                 onEdit={i => this.setState({ editingQuiz: i })}
                 onGetResults={() => {}}
-                onAddQuiz={() => {}}
+                onAddQuiz={() => this.setState(({ editingQuiz: -1 }))}
             />;
         return <QuizEdit
             quiz={this.state.quizes[this.state.editingQuiz]}
-            onEdit={q => console.log(q)}
+            onEdit={q => this.onEdit(this.state.editingQuiz, q)}
             onGoBack={() => this.setState({ editingQuiz: undefined })}
         />;
     }

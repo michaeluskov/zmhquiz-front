@@ -49,6 +49,10 @@ const stringToDate = (str: string) => {
     return d;
 };
 
+const emptyQuestion = {
+    answers: [{}, {}, {}]
+} as Question;
+
 export class QuizEdit extends Component<Props, State> {
 
     constructor(state, context) {
@@ -57,7 +61,7 @@ export class QuizEdit extends Component<Props, State> {
             editedQuiz: this.props.quiz || {
                 from: formatDate(new Date()),
                 till: formatDate(addTenMinutes(new Date())),
-                questions: []
+                questions: [emptyQuestion]
             } as Quiz
         }
     }
@@ -104,7 +108,7 @@ export class QuizEdit extends Component<Props, State> {
                 </div>
                 <div className="qe-formitem">
                     <span className="qe-label">Ссылка на квиз: </span>
-                    <Input value={`https://zmh.wtf/${this.state.editedQuiz.id}`} onChange={() => {}}/>
+                    <Input value={this.state.editedQuiz.id ? `https://zmh.wtf/${this.state.editedQuiz.id}` : ""} onChange={() => {}}/>
                 </div>
               <div className="qe-formitem">
                   <span className="qe-label">Название квиза: </span>
@@ -157,12 +161,10 @@ export class QuizEdit extends Component<Props, State> {
                         </div>
                     </div>
                 ))}
-                <div>
+                <div className="qe-buttonsplace">
                     <Button
                         title={"Добавить вопрос"}
-                        onClick={() => this.produceState(s => {s.editedQuiz.questions.push({
-                            answers: [{}, {}, {}]
-                        } as Question)})}
+                        onClick={() => this.produceState(s => {s.editedQuiz.questions.push(emptyQuestion)})}
                     />
                 </div>
                 <div>

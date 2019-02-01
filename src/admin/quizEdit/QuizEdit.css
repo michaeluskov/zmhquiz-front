@@ -32,6 +32,7 @@
 
 .qe-questiontitle {
     font-size: 24px;
+    margin-bottom: 20px;
 }
 
 .qe-formlabel {
@@ -40,4 +41,8 @@
 
 .qe-formlabel input {
     width: auto;
+}
+
+.qe-buttonsplace {
+    margin-top: 20px;
 }
