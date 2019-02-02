@@ -3,10 +3,12 @@ import {h, Component} from "preact";
 import {Message, MessageDivider} from "../../views/message/Message";
 import {Input} from "../../views/input/Input";
 import {Button} from "../../views/button/Button";
-import {getQuizes, getSession, updateQuiz} from "../api";
+import {getQuizes, getResults, getSession, updateQuiz} from "../api";
 import {Quiz} from "../../logic/misc";
 import {QuizList} from "../../views/quizList/QuizList";
 import {QuizEdit} from "../quizEdit/QuizEdit";
+import {Results} from "../misc";
+import {ResultsView} from "../resultsView/ResultsView";
 
 interface State {
     error: string;
@@ -14,6 +16,7 @@ interface State {
     passwordValue: string;
     quizes: Quiz[];
     editingQuiz: number;
+    showingResults: Results;
 }
 
 export class AdminContainer extends Component<{}, State> {
@@ -59,6 +62,11 @@ export class AdminContainer extends Component<{}, State> {
             .catch(e => this.handleError(e));
     }
 
+    showResults(num: number) {
+        getResults(this.state.sessionId, this.state.quizes[num].id)
+            .then(data => this.setState({ showingResults: data }));
+    }
+
     render() {
         if (this.state.error)
             return <Message header={"Ошибка"} content={this.state.error} />;
@@ -74,11 +82,13 @@ export class AdminContainer extends Component<{}, State> {
                     </MessageDivider>
                 </div>}
             />;
+        if (this.state.showingResults)
+            return <ResultsView results={this.state.showingResults} onGoBack={() => this.setState({ showingResults: undefined })} />;
         if (this.state.editingQuiz === undefined)
             return <QuizList
                 quizes={this.state.quizes || []}
                 onEdit={i => this.setState({ editingQuiz: i })}
-                onGetResults={() => {}}
+                onGetResults={num => this.showResults(num)}
                 onAddQuiz={() => this.setState(({ editingQuiz: -1 }))}
             />;
         return <QuizEdit
