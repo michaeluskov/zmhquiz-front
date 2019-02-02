@@ -97,9 +97,12 @@ export class QuizEdit extends Component<Props, State> {
             questions: []
         };
         return <MainContainer>
-          <div class="qe-root">
-              <div class="qe-goback">
+          <div className="qe-root">
+              <div className="qe-goback">
                   <Link text={"Вернуться назад"} onClick={this.props.onGoBack} />
+              </div>
+              <div className="qe-attentionsign">
+                  Аттеншн, в этой форме нет никаких проверок, поэтому заполни все поля
               </div>
               <div className="qe-form">
                 <div className="qe-formitem">

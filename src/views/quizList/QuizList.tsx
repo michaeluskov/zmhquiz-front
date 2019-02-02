@@ -19,7 +19,7 @@ export const QuizList: FunctionalComponent<Props> = props => (
             </div>
             {props.quizes.map((quiz, i) =>
                 <div className="ql-quiz">
-                    <div className="ql-name">{quiz.name}</div>
+                    <div className="ql-name">{quiz.name || "Кто-то молодец и не вписал название квиза"}</div>
                     <div className="ql-actions">
                         <span className="ql-action"><Link text={"Редактировать"} onClick={() => props.onEdit(i)}/></span>
                         <span class="ql-action"><Link text={"Результаты"} onClick={() => props.onGetResults(i)}/></span>
