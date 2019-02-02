@@ -16,6 +16,9 @@ export const QuestionView = (props: Props) => (
     <MainContainer>
         <div className="qv-root">
             <div className="qv-timer-place">
+                <div className="qv-price">
+                    {props.question.price}&nbsp;₽
+                </div>
                 <div className={`qv-timer ${props.secondsLeft <=4 ? "qv-timer-red" : ""}`}>
                     {props.secondsLeft}
                 </div>
