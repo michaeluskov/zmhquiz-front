@@ -1,6 +1,6 @@
 export interface Question {
-    id: string;
     question: string;
+    price: number;
     timeToAnswer: number;
     answers: {
         title: string;

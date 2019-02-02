@@ -50,7 +50,7 @@ const stringToDate = (str: string) => {
 };
 
 const emptyQuestion = {
-    answers: [{}, {}, {}]
+    answers: [{ isRight: true }, {}, {}]
 } as Question;
 
 export class QuizEdit extends Component<Props, State> {
@@ -76,6 +76,7 @@ export class QuizEdit extends Component<Props, State> {
             this.produceState(s => {s.editedQuiz.from = date.toString()});
             this.produceState(s => {s.editedQuiz.till = addTenMinutes(date).toString()});
         }
+        console.log(this.state.editedQuiz);
     }
 
     setTill(v: string) {
