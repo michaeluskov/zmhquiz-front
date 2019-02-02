@@ -51,7 +51,8 @@ const stringToDate = (str: string) => {
 
 const emptyQuestion = {
     answers: [{ isRight: true }, {}, {}],
-    price: 10
+    price: 10,
+    timeToAnswer: 10
 } as Question;
 
 export class QuizEdit extends Component<Props, State> {
@@ -138,7 +139,7 @@ export class QuizEdit extends Component<Props, State> {
                         </div>
                         <div className="qe-formitem">
                             <span className="qe-label">Время для ответа в секундах</span>
-                            <Input value={q.timeToAnswer || "10"} onChange={v => this.produceState(s => {s.editedQuiz.questions[i].timeToAnswer = Number(v)})} />
+                            <Input value={q.timeToAnswer} onChange={v => this.produceState(s => {s.editedQuiz.questions[i].timeToAnswer = Number(v)})} />
                         </div>
                         <div className="qe-formitem">
                             <span className="qe-label">Баллов за ответ</span>
