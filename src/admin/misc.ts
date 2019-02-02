@@ -3,10 +3,10 @@ import {Quiz} from "../logic/misc";
 export interface Results {
     quiz: Quiz;
     userAnswers: {
-        login: string;
+        _id: string;
         answers: {
             questionNum: number;
             answerNum: number;
         }[];
-    }
+    }[];
 }

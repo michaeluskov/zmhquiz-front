@@ -1,7 +1,19 @@
 .rv-root {
     padding: 30px;
+    min-width: 500px;
 }
 
 .rv-gobackplace {
     margin-bottom: 30px;
+}
+
+.rv-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.rv-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

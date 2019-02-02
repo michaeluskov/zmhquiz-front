@@ -9,12 +9,45 @@ interface Props {
     onGoBack: () => void;
 }
 
-export const ResultsView: FunctionalComponent<Props> = (props) => (
-    <MainContainer>
-        <div className="rv-root">
-            <div className="rv-gobackplace">
-                <Link text={"Вернуться назад"} onClick={props.onGoBack}/>
+export const ResultsView: FunctionalComponent<Props> = (props) => {
+    return (
+        <MainContainer>
+            <div className="rv-root">
+                <div className="rv-gobackplace">
+                    <Link text={"Вернуться назад"} onClick={props.onGoBack}/>
+                </div>
+                <table className="rv-table">
+                    <tr>
+                        <th/>
+                        {props.results.quiz.questions.map((q, i) => (
+                            <th alt={q.question}>{q.question}</th>
+                        ))}
+                        <th>Сумма баллов</th>
+                    </tr>
+                    {props.results.userAnswers.map((ua, i) => {
+                        const scores = props.results.quiz.questions.map((q, i) => {
+                            const answer = ua.answers.find(a => a.questionNum == i) || {} as any;
+                            const userAnswer = q.answers[answer.answerNum] || {} as any;
+                            return userAnswer.isRight ? q.price : 0;
+                        });
+                        return (
+                            <tr>
+                                <td alt={ua._id}>{ua._id}</td>
+                                {scores.map(score => {
+                                    return ([
+                                        <td>
+                                            {score}
+                                        </td>
+                                    ]);
+                                })}
+                                <td>
+                                    {scores.reduce((sum, score) => score + sum, 0)}
+                                </td>
+                            </tr>
+                        );
+                    })}
+                </table>
             </div>
-        </div>
-    </MainContainer>
-);
+        </MainContainer>
+    );
+};
