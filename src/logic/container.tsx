@@ -1,9 +1,10 @@
 import {h, Component, VNode} from "preact";
 import * as Api from "./api";
 import {Question} from "./misc";
-import {Message} from "../views/message/Message";
+import {Message, MessageDivider} from "../views/message/Message";
 import {QuestionView} from "../views/questionView/QuestionView";
 import {Button} from "../views/button/Button";
+import {Link} from "../views/link/Link";
 
 interface Props {
     login: string;
@@ -68,6 +69,8 @@ export class Container extends Component<Props, State> {
     onInterval() {
         if (this.state.freeTime == 0) {
             this.clearInterval();
+            this.state.questions.slice(this.state.currentQuestion)
+                .forEach((question, i) => Api.postAnswer(this.props.quizId, this.props.login, this.props.hash, i, -1))
             this.setState({
                 messageHeader: "Увы, твое время истекло"
             });
@@ -115,7 +118,16 @@ export class Container extends Component<Props, State> {
                  </div>}
              />;
         if (this.state.currentQuestion >= this.state.questions.length)
-            return <Message header="Ты молодец!"/>
+            return <Message
+                header="Ты молодец!"
+                content={<div>
+                    <MessageDivider>
+                        Скоро заработанные тобой баллы появятся в приложении.
+                    </MessageDivider>
+                    <MessageDivider>
+                        По поводу накрутки баллов писать <Link text={"сюда"} onClick={() => document.location.href = "https://instagram.com/michaeluskov"}/>.
+                    </MessageDivider>
+                </div>}/>;
         return <QuestionView
             secondsLeft={this.state.freeTime}
             isDisabled={this.state.areButtonsDisabled}
