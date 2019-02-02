@@ -25,6 +25,7 @@
     font-size: 20px;
     white-space: nowrap;
     text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .qv-button-loading::before {
