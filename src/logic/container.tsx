@@ -102,7 +102,7 @@ export class Container extends Component<Props, State> {
 
     render() {
         if (this.state.error)
-            return <Message header={"Упс! Произошла ошибка"} content={this.state.error}/>;
+            return <Message header={"Упс!"} content={this.state.error}/>;
         if (this.state.messageHeader)
             return <Message header={this.state.messageHeader} content={this.state.messageText}/>;
         if (this.state.questions === undefined)
