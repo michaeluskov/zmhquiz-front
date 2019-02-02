@@ -37,7 +37,7 @@ class ScaleText extends Component<{text: string}, {fontSize: number}> {
 
     setFontSize() {
         const windowWidth = window.innerWidth;
-        const fontSize = Math.floor((windowWidth - 30) / this.props.text.length);
+        const fontSize = Math.floor(windowWidth / this.props.text.length);
         this.setState({ fontSize: Math.min(fontSize, 24)})
     }
 
