@@ -55,6 +55,6 @@ export const Button: Preact.FunctionalComponent<QuestionButtonProps> = (props) =
             .map(prop => PropToClassName[prop])
             .join(" ")}
         disabled={props.isDisabled}>
-        {props.isFullWidth ? <ScaleText text={props.title} /> : props.title}
+        {props.title}
     </button>
 );
