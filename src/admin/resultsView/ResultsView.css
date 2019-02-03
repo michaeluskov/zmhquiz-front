@@ -12,8 +12,13 @@
     table-layout: fixed;
 }
 
-.rv-cell {
+.rv-table td,
+.rv-table th {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.rv-firstheader {
+    width: 45%;
 }

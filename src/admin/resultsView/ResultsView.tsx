@@ -18,11 +18,11 @@ export const ResultsView: FunctionalComponent<Props> = (props) => {
                 </div>
                 <table className="rv-table">
                     <tr>
-                        <th/>
+                        <th className="rv-firstheader" />
                         {props.results.quiz.questions.map((q, i) => (
                             <th alt={q.question}>{q.question}</th>
                         ))}
-                        <th>Сумма баллов</th>
+                        <th>Сумма</th>
                     </tr>
                     {props.results.userAnswers.map((ua, i) => {
                         const scores = props.results.quiz.questions.map((q, i) => {
