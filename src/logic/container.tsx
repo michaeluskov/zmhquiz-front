@@ -37,7 +37,7 @@ export class Container extends Component<Props, State> {
             .catch(e => this.handleError(e))
     }
 
-    handleError(e, text = "Произошло что-то вообще непонятное. Даже не знаю, куда смотреть.") {
+    handleError(e, text = "Произошло что-то вообще непонятное. Скорее всего, дело в интернет-соединении. Обнови страницу и перезапусти квиз") {
         e && console.error(e.message);
         e && console.error(e.stack);
         this.setState({ error: text });
