@@ -22,14 +22,23 @@ interface PostAnswerInterface {
     rightAnswerNum: number;
 }
 
-export const postAnswer = (quizId, login, hash, questionNum, answerNum): Promise<PostAnswerInterface> => {
+function axiosPostAnswer(login, hash, questionNum, answerNum, quizId) {
     return axios.post(`${process.env.API_URL}/answer`, {
         login,
         hash,
         questionNum,
         answerNum,
         quiz: quizId
-    })
-        .then(result => result.data);
-};
+    });
+}
 
+export const postAnswer = (quizId, login, hash, questionNum, answerNum): Promise<PostAnswerInterface> => {
+    return axiosPostAnswer(login, hash, questionNum, answerNum, quizId)
+        .catch(() =>
+            wait(2000)
+                .then(() => axiosPostAnswer(login, hash, questionNum, answerNum, quizId)))
+        .catch(() =>
+            wait(2000)
+                .then(() => axiosPostAnswer(login, hash, questionNum, answerNum, quizId)))
+        .then(result => result.data)
+};
