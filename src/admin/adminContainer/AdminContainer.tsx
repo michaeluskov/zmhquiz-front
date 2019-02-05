@@ -26,10 +26,15 @@ export class AdminContainer extends Component<{}, State> {
         super(props, context);
     }
 
-    handleError(e?) {
+    handleError(e?, text?) {
         e && console.error(e.message);
         e && console.error(e.stack);
-        this.setState({ error: e ? `${e.message} (${e.stack})` : undefined });
+        let errorText;
+        if (text)
+            errorText = text;
+        else if (e)
+            errorText = `${e.message} (${e.stack})`;
+        this.setState({ error: errorText });
         return Promise.resolve();
     }
 
