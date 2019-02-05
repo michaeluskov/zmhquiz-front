@@ -4,7 +4,7 @@ import {Message, MessageDivider} from "../../views/message/Message";
 import {Input} from "../../views/input/Input";
 import {Button} from "../../views/button/Button";
 import {getQuizes, getResults, getSession, updateQuiz} from "../api";
-import {Quiz} from "../../logic/misc";
+import {Quiz, wait} from "../../logic/misc";
 import {QuizList} from "../../views/quizList/QuizList";
 import {QuizEdit} from "../quizEdit/QuizEdit";
 import {Results} from "../misc";
@@ -15,6 +15,7 @@ interface State {
     sessionId: string;
     passwordValue: string;
     quizes: Quiz[];
+    quizDraft: Quiz;
     editingQuiz: number;
     showingResults: Results;
 }
@@ -25,10 +26,11 @@ export class AdminContainer extends Component<{}, State> {
         super(props, context);
     }
 
-    handleError(e, text = "Произошло что-то вообще непонятное. Даже не знаю, куда смотреть.") {
+    handleError(e?) {
         e && console.error(e.message);
         e && console.error(e.stack);
-        this.setState({ error: text });
+        this.setState({ error: e ? `${e.message} (${e.stack})` : undefined });
+        return Promise.resolve();
     }
 
     login() {
@@ -56,10 +58,13 @@ export class AdminContainer extends Component<{}, State> {
     }
 
     onEdit(quizNum: number, quiz: Quiz) {
+        this.setState({ quizDraft: quiz});
         updateQuiz(this.state.sessionId, quiz)
             .then(() => this.showQuizes())
-            .then(() => this.setState({ editingQuiz: undefined }))
-            .catch(e => this.handleError(e));
+            .then(() => this.setState({ editingQuiz: undefined, quizDraft: undefined }))
+            .catch(e => this.handleError(e)
+                .then(() => wait(2000))
+                .then(() => this.handleError()));
     }
 
     showResults(num: number) {
@@ -92,9 +97,9 @@ export class AdminContainer extends Component<{}, State> {
                 onAddQuiz={() => this.setState(({ editingQuiz: -1 }))}
             />;
         return <QuizEdit
-            quiz={this.state.quizes[this.state.editingQuiz]}
+            quiz={this.state.quizDraft || this.state.quizes[this.state.editingQuiz]}
             onEdit={q => this.onEdit(this.state.editingQuiz, q)}
-            onGoBack={() => this.setState({ editingQuiz: undefined })}
+            onGoBack={() => this.setState({ editingQuiz: undefined, quizDraft: undefined })}
         />;
     }
 }
